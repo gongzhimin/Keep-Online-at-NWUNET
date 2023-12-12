@@ -4,8 +4,8 @@ from datetime import datetime
 
 
 url = "http://10.0.1.165/"
-usr = '202322882'
-pwd = '160029'
+usr = '202312345'
+pwd = '123456'
 
 def get_current_time():
     """
