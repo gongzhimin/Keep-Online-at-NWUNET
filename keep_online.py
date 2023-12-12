@@ -4,7 +4,7 @@ import random
 import requests
 from requests.exceptions import Timeout
 
-from login import login
+from login import get_current_time, login, LOGGER
 
 
 """
@@ -18,9 +18,11 @@ test_url = "http://www.baidu.com/"
 
 
 def get_on(usr, pwd):
-    print('Disconnection detected, login now.')
+    msg1 = f'{get_current_time()}\t Disconnection detected, login now.'
+    print(msg1), LOGGER.info(msg1)
     login(usr, pwd)
-    print('Login success.')
+    msg2 = f'{get_current_time()}\t Login success.'
+    print(msg2), LOGGER.info(msg2)
 
 
 def listen_switch(csv_dir):
@@ -38,8 +40,8 @@ def listen_switch(csv_dir):
         try:
             r = requests.get(test_url, timeout=5)
             if test_url in r.text :
-                print('Connected now.')
-                print(f'Wait {time_lag} seconds then check again.')
+                msg = f'{get_current_time()}\t Connected now, wait {time_lag} seconds then check again.'
+                print(msg), LOGGER.info(msg)
                 time.sleep(time_lag)
                 continue
             get_on(usr, pwd)

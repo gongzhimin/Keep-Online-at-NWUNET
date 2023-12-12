@@ -1,8 +1,30 @@
 import requests
+from loguru import logger
+from datetime import datetime
+
 
 url = "http://10.0.1.165/"
 usr = '202322882'
 pwd = '160029'
+
+def get_current_time():
+    """
+    Get current time.
+    """
+    current_time = datetime.now()
+    formatted_time = current_time.strftime('%Y-%m-%d %H:%M:%S')
+    
+    return formatted_time
+
+
+def set_logger(log_dir='./'):
+    logger.remove(handler_id=None)
+    logger.add(f"{log_dir}/logs.log", format='{message}', level='INFO')
+    
+    return logger
+
+
+LOGGER = set_logger()
 
 
 def login(usr, pwd):
@@ -32,7 +54,8 @@ def login(usr, pwd):
         'cmd': '',
         'Login': '',
     }
-    print(f'Trying to login with [{usr}, {pwd}].')
+    msg = f'{get_current_time()}\t Trying to login with [{usr}, {pwd}].'
+    print(msg), LOGGER.info(msg)
     s = requests.Session()
     s.get(url)
     s.post(url + 'a70.htm', payload)
